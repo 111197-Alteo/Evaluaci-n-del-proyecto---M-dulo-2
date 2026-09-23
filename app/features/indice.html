@@ -1,0 +1,62 @@
+<ActionBar title="Buscar productos"></ActionBar>
+
+<StackLayout>
+
+    <TextField
+        hint="Buscar producto..."
+        [(ngModel)]="textoBusqueda"
+        min-length-custom="2"
+        (textChange)="filtrarProductos()">
+    </TextField>
+
+    <Button
+        text="Actualizar"
+        (tap)="actualizar()"
+        #refreshButton>
+    </Button>
+
+    <ListView
+        [items]="productosFiltrados"
+        pullToRefresh="true"
+        (pullToRefreshInitiated)="onRefresh($event)">
+
+        <ng-template let-producto="item">
+
+            <FlexboxLayout
+                flexDirection="row"
+                justifyContent="space-between"
+                padding="12"
+                (tap)="onProductoTap(producto)"
+                (longPress)="onLongPress(producto)">
+
+                <FlexboxLayout
+                    flexDirection="column"
+                    flexGrow="1">
+
+                    <Label
+                        [text]="producto.nombre"
+                        class="nombre">
+                    </Label>
+
+                    <Label
+                        [text]="'$' + producto.precio">
+                    </Label>
+
+                    <Label
+                        [text]="'Categoría: ' + producto.categoria">
+                    </Label>
+
+                </FlexboxLayout>
+
+                <Button
+                    text="Categoría"
+                    (tap)="seleccionarCategoria(producto)">
+                </Button>
+
+            </FlexboxLayout>
+
+        </ng-template>
+
+    </ListView>
+
+</StackLayout>
